@@ -87,6 +87,8 @@ button { font: inherit; }
 
 .label--accent { color: var(--signal-deep); }
 
+.label--ondark { color: rgba(228, 233, 238, 0.72); }
+
 .nb { white-space: nowrap; }
 
 .arrow-ic { flex: none; transition: transform 0.25s var(--ease-out); }
@@ -857,6 +859,36 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
 
 .build-desc { color: var(--slate); }
 
+/* ---------- photo band (image behind dark section) ---------- */
+
+.band {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(3.5rem, 9vh, 5.5rem) 0;
+  margin-bottom: clamp(2rem, 5vh, 3rem);
+}
+
+.band-bg { position: absolute; inset: 0; }
+
+.band-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.3;
+  filter: saturate(0.85);
+}
+
+.band > .container { position: relative; }
+
+.band-title {
+  margin-top: 1rem;
+  font-size: clamp(1.625rem, 3.4vw, 2.5rem);
+  max-width: 34rem;
+}
+
 /* ---------- media cards (projects: rocket + manifest) ---------- */
 
 .card--wide { width: 100%; }
@@ -982,6 +1014,28 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
   height: 0.375rem;
   background: var(--signal);
 }
+
+.site-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.site-grid figure { margin: 0; min-height: 0; height: 100%; }
+
+.site-grid .site-tall { grid-row: span 2; }
+
+.site-grid figure:not(.site-tall) img { aspect-ratio: 16 / 10; }
+
+.site-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.625rem;
+}
+
+.site-caption { margin-top: 0.875rem; }
 
 .post-grid {
   display: grid;
@@ -1177,6 +1231,14 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
   .page-head-photo { max-width: 24rem; }
 
   .video-list { columns: 1; }
+
+  .site-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+
+  .site-grid .site-tall { grid-row: auto; }
+
+  .site-grid .site-tall img { aspect-ratio: 4 / 5; }
+
+  .site-grid figure:not(.site-tall) img { aspect-ratio: 3 / 2; }
 
   .post-grid { grid-template-columns: 1fr; }
 
