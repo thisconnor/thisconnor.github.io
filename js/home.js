@@ -143,7 +143,8 @@
     });
 
     tl.to(".hero-zoom", { scale: 1, ease: "none" }, 0)
-      .to(".hero-photo", { y: -20, ease: "none" }, 0)
+      .to(".hero-photo", { y: -10, ease: "none" }, 0)
+      .to(".hero-photo-person", { y: -24, ease: "none" }, 0)
       .to(canvas, { opacity: 0.5, ease: "none" }, 0);
   });
 

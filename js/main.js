@@ -18,6 +18,21 @@
     return prefix + Math.round(v).toLocaleString("en-US") + suffix;
   }
 
+  // -- YouTube facades: the real player loads only on click, keeping the
+  // page fast and the console clean. Works with or without animation. --
+  document.querySelectorAll(".yt-facade[data-yt]").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      var iframe = document.createElement("iframe");
+      iframe.className = "video-embed";
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + btn.dataset.yt + "?autoplay=1&rel=0";
+      iframe.title = btn.getAttribute("aria-label") || "Video";
+      iframe.allow = "accelerometer; autoplay; encrypted-media; picture-in-picture";
+      iframe.allowFullscreen = true;
+      btn.replaceWith(iframe);
+    }, { once: true });
+  });
+
   if (!hasLibs || reduced) {
     docEl.classList.add("no-anim");
     setCountersFinal();
@@ -190,4 +205,24 @@
   window.addEventListener("pageshow", function (e) {
     if (e.persisted && veil) gsap.set(veil, { display: "none" });
   });
+
+  // -- looping showcase videos: hide controls, play only while on screen.
+  // Reduced-motion and no-JS keep the poster + native controls instead. --
+  var clips = document.querySelectorAll("video[data-autoplay]");
+  if (clips.length && "IntersectionObserver" in window) {
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        if (entry.isIntersecting) {
+          v.play().catch(function () {});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+    clips.forEach(function (v) {
+      v.removeAttribute("controls");
+      vio.observe(v);
+    });
+  }
 })();
