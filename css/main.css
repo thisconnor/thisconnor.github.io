@@ -408,6 +408,11 @@ html.js:not(.no-anim) .veil { display: block; }
 
 .stats-bg { position: absolute; inset: 0; }
 
+.stats-bg picture, .band-bg picture, .footer-bg picture {
+  position: absolute;
+  inset: 0;
+}
+
 .stats-bg img {
   width: 100%;
   height: 100%;
@@ -581,6 +586,23 @@ html.js:not(.no-anim) .veil { display: block; }
 }
 
 .xp-side { display: flex; flex-direction: column; gap: 0.875rem; }
+
+.xp--photos { grid-template-columns: 11rem minmax(0, 1fr) 14rem; }
+
+.xp-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.xp-photos figure {
+  margin: 0;
+  border: 1px solid var(--line);
+  padding: 0.375rem;
+  background: #fff;
+}
+
+.xp-photos img { width: 100%; display: block; }
 
 .logo-tile {
   background: #fff;
@@ -787,6 +809,7 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
 .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
 
 .card {
+  position: relative;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 1rem;
@@ -795,6 +818,15 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
   flex-direction: column;
   transition: border-color 0.25s ease, transform 0.25s var(--ease-out);
 }
+
+.card-icon {
+  position: absolute;
+  top: clamp(1.25rem, 2.5vw, 1.75rem);
+  right: clamp(1.25rem, 2.5vw, 1.75rem);
+  color: var(--signal-deep);
+}
+
+.card-icon svg { display: block; }
 
 .card:hover { border-color: var(--signal); transform: translateY(-3px); }
 
@@ -882,6 +914,8 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
 }
 
 .band > .container { position: relative; }
+
+.band--nitrogen .band-bg img { object-position: center 42%; }
 
 .band-title {
   margin-top: 1rem;
@@ -1045,6 +1079,11 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
   margin-top: 1.5rem;
 }
 
+.post-grid--duo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 46rem;
+}
+
 .post-grid figure { margin: 0; }
 
 .post-grid video {
@@ -1160,7 +1199,7 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
   position: relative;
   overflow: hidden;
   background: var(--ink);
-  padding: 3rem 0 3.25rem;
+  padding: clamp(4rem, 9vh, 5.75rem) 0;
 }
 
 .footer-bg { position: absolute; inset: 0; }
@@ -1169,9 +1208,9 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 32%;
-  opacity: 0.28;
-  filter: saturate(0.8);
+  object-position: center 26%;
+  opacity: 0.42;
+  filter: saturate(0.9);
 }
 
 .footer-grid {
@@ -1244,7 +1283,11 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
 
   .scroll-hint { display: none; }
 
-  .xp, .edu-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .xp, .edu-grid, .xp--photos { grid-template-columns: 1fr; gap: 1.25rem; }
+
+  .xp-photos { flex-direction: row; }
+
+  .xp-photos figure { flex: 1; min-width: 0; }
 
   .page-head-grid { grid-template-columns: 1fr; align-items: start; }
 
