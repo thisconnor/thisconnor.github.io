@@ -75,7 +75,8 @@
         tl.fromTo(el, { clipPath: "inset(100% 0% 0% 0%)" }, {
           clipPath: "inset(0% 0% 0% 0%)",
           duration: 0.9,
-          ease: "expo.out"
+          ease: "expo.out",
+          onComplete: function () { gsap.set(el, { clearProps: "clipPath" }); }
         }, pos);
         var img = el.querySelector("img");
         if (img) {
@@ -175,13 +176,14 @@
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
     var href = a.href;
+    var go = function () {
+      if (go.done) return;
+      go.done = true;
+      location.href = href;
+    };
     gsap.set(veil, { display: "block", yPercent: 100 });
-    gsap.to(veil, {
-      yPercent: 0,
-      duration: 0.32,
-      ease: "power2.in",
-      onComplete: function () { location.href = href; }
-    });
+    gsap.to(veil, { yPercent: 0, duration: 0.32, ease: "power2.in", onComplete: go });
+    window.setTimeout(go, 700);
   });
 
   // Back/forward cache restore: never leave the veil covering the page.
