@@ -1,1 +1,9 @@
 .DS_Store
+
+# Source materials -- never commit to the public site repo.
+# Resume, master doc, and original photos stay local; only
+# optimized copies in /img/ ship.
+assets/
+
+# Local tooling
+.claude/
