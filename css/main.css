@@ -396,6 +396,47 @@ html.js:not(.no-anim) .veil { display: block; }
   transform-origin: top;
 }
 
+/* ---------- logo belt (marquee) ---------- */
+
+.logo-belt {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 1.625rem 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.belt-track {
+  display: flex;
+  width: max-content;
+  animation: belt-scroll 34s linear infinite;
+}
+
+.logo-belt:hover .belt-track { animation-play-state: paused; }
+
+.belt-set {
+  display: flex;
+  align-items: center;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  padding-right: clamp(3rem, 6vw, 5.5rem);
+}
+
+.belt-set img {
+  height: clamp(1.625rem, 2.4vw, 2.125rem);
+  width: auto;
+  opacity: 0.55;
+  flex: none;
+}
+
+@keyframes belt-scroll {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .belt-track { animation: none; }
+}
+
 /* ---------- stats band ---------- */
 
 .stats {
