@@ -33,6 +33,33 @@
     }, { once: true });
   });
 
+  // -- pause controls for looping media (WCAG 2.2.2). --
+  var PAUSE_ICON = '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2h2v8H3zM7 2h2v8H7z" fill="currentColor"/></svg>';
+  var PLAY_ICON = '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 1.75v8.5L10 6z" fill="currentColor"/></svg>';
+
+  function makeToggle(cls, pauseLabel, playLabel) {
+    var el = document.createElement("button");
+    el.type = "button";
+    el.className = cls;
+    function set(playing) {
+      el.innerHTML = playing ? PAUSE_ICON : PLAY_ICON;
+      el.setAttribute("aria-label", playing ? pauseLabel : playLabel);
+    }
+    return { el: el, set: set };
+  }
+
+  // The logo belt is a CSS animation, so its control does not wait on GSAP.
+  // Reduced motion already stops the belt, so no button is needed there.
+  var belt = document.querySelector(".logo-belt");
+  if (belt && !reduced) {
+    var beltToggle = makeToggle("belt-toggle", "Pause logo scroll", "Play logo scroll");
+    beltToggle.set(true);
+    belt.appendChild(beltToggle.el);
+    beltToggle.el.addEventListener("click", function () {
+      beltToggle.set(!belt.classList.toggle("is-paused"));
+    });
+  }
+
   if (!hasLibs || reduced) {
     docEl.classList.add("no-anim");
     setCountersFinal();
@@ -213,15 +240,33 @@
     var vio = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         var v = entry.target;
-        if (entry.isIntersecting) {
-          v.play().catch(function () {});
-        } else {
+        if (!entry.isIntersecting) {
           v.pause();
+        } else if (!v.dataset.userPaused) {
+          v.play().catch(function () {});
         }
       });
     }, { threshold: 0.35 });
     clips.forEach(function (v) {
       v.removeAttribute("controls");
+      var wrap = document.createElement("div");
+      wrap.className = "video-wrap";
+      v.parentNode.insertBefore(wrap, v);
+      wrap.appendChild(v);
+      var toggle = makeToggle("video-toggle", "Pause video", "Play video");
+      toggle.set(false);
+      wrap.appendChild(toggle.el);
+      toggle.el.addEventListener("click", function () {
+        if (v.paused) {
+          delete v.dataset.userPaused;
+          v.play().catch(function () {});
+        } else {
+          v.dataset.userPaused = "1";
+          v.pause();
+        }
+      });
+      v.addEventListener("play", function () { toggle.set(true); });
+      v.addEventListener("pause", function () { toggle.set(false); });
       vio.observe(v);
     });
   }
