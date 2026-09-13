@@ -163,7 +163,11 @@ not scattered.
 
 ## Style conventions
 
-- In all copy and code comments, use "--" or "-" instead of em dashes.
+- Do not use em dashes or dashes for rhythm in copy. Use an en dash for
+  ranges. Double hyphens are fine in code comments. Use curly apostrophes
+  in visible copy.
 - Keep copy tight and specific -- plain verbs, sentence case, no filler.
   Specific beats clever. Every fact traceable to the resume or master
   doc.
+- Follow the anti-slop editing guardrails and protected-content list in
+  [`_docs/ai-slop-removal-from-connors-portfolio-site.md`](_docs/ai-slop-removal-from-connors-portfolio-site.md).
