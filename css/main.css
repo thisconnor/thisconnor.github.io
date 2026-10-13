@@ -1305,7 +1305,7 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
   color: var(--on-dark);
 }
 
-.footer-links { display: flex; flex-wrap: wrap; gap: 1rem 1.75rem; }
+.footer-links { display: flex; gap: 1.75rem; }
 
 .footer-link {
   display: inline-flex;
@@ -1392,8 +1392,8 @@ a.logo-tile:hover { border-color: var(--signal); transform: translateY(-2px); }
 @media (max-width: 640px) {
   .nav-brand .brand-full { display: none; }
   .nav-brand .brand-short { display: inline; }
-  .nav-links { gap: 0.625rem; }
-  .nav-link { font-size: 0.625rem; letter-spacing: 0.06em; }
+  .nav-links { gap: 0.875rem; }
+  .nav-link { font-size: 0.6875rem; letter-spacing: 0.08em; }
   .index-row { gap: 0.875rem; }
   .stats-grid { gap: 2rem 1.25rem; }
 }
